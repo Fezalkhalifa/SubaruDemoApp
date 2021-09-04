@@ -1,0 +1,53 @@
+﻿@using ProductCommon;
+@{
+    ViewBag.Title = "ProductList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center">@Resource.ProductList</h2>
+<hr />
+<div ng-controller="ProductListCtrl">
+    <form ng-init="init(@ViewBag.id)">
+        <div class="row" ng-show="productDetail.length>0">
+            <div class="col-md-12 modal-title" style="text-align:center">
+                @Resource.ProductDetails
+            </div>
+            <hr />
+            <div class="col-md-12">
+                <ul>
+                    <li><strong>@Resource.Name :</strong> {{productDetail[0].Name}}</li>
+                    <li><strong>@Resource.TypeName :</strong> {{productDetail[0].TypeName}}</li>
+                    <li><strong>@Resource.Description :</strong> {{productDetail[0].Description}}</li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table ng-table="tableParams" show-filter="true" class="table table-bordered table-striped">
+                    {{$data}}
+                    <tr ng-repeat="x in $data track by $index">
+                        <td title="'@Resource.Sr'">
+                            {{$index+1}}
+                        </td>
+                        <td title="'@Resource.Name'" filter="{ Name: 'text'}">
+                            <a href="#" ng-click="ShowDetail(x.Id)">{{x.Name}}</a>
+                        </td>
+                        <td title="'@Resource.TypeName'" filter="{ TypeName: 'text'}">
+                            {{x.TypeName}}
+                        </td>
+                        <td title="'@Resource.Description'" filter="{ Description: 'text'}">
+                            {{x.Description}}
+                        </td>
+                    </tr>
+                    <tr ng-show="$data.length == 0">
+                        <td colspan="4" style="text-align:center;"><span>@Resource.NoRecordsFound</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/Product")
+}

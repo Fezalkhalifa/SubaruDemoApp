@@ -1,0 +1,41 @@
+﻿@using ProductCommon;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-controller="ProductTypeCtrl">
+    <form ng-init="init()">
+        <div class="alert modal-header" style="text-align:center">
+            <p><em><strong>@Resource.ProductTypeList</strong>  </em></p>
+        </div>
+        <div class="clearfix">
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table ng-table="tableParams" show-filter="true" class="table table-bordered table-striped">
+                    {{$data}}
+                    <tr ng-repeat="x in $data track by $index">
+                        <td title="'@Resource.Sr'">
+                            {{$index+1}}
+                        </td>
+                        <td title="'@Resource.Name'" filter="{ Name: 'text'}">
+                            <a href="#" ng-click="ShowChild(x.Id)">{{x.Name}}</a>
+                        </td>
+                        <td title="'@Resource.Description'" filter="{ Description: 'text'}">
+                            {{x.Description}}
+                        </td>
+                    </tr>
+                    <tr ng-show="$data.length == 0">
+                        <td colspan="4" style="text-align:center;"><span>@Resource.NoRecordsFound</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/ProductType")
+}
